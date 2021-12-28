@@ -73,122 +73,122 @@
     "rootDir": "src", // ts文件源码根目录，一般为src，若指定rootDir为src，则要求所有.ts必须在src中，否则会报错；此选项默认值是非声明文件(.d.ts)的.ts文件最长公用路径，如果composite选项有设置，则rootDir为tsconfig.json所在目录；rootDir不会影响哪些ts文件会被编译，它和files、inculde、exclude没有交互
     "rootDirs": [], // 指定多个源码目录，一般在需要打包非代码资源文件时有用；https://www.typescriptlang.org/tsconfig#rootDirs
     "typeRoots": [], // 声明文件根目录；默认情况下所有node_modules下@types目录中的声明文件都会被编译，若指定了typeRoots，则只有typeRoots听声明文件会被编译，其他非typeRoots下的声明文件都将不会被编译，包含node_modules中的@types；
-    "types": [] // 类似typeRoots，前者指定目录，后者指定node_modules中@types目录下哪些声明文件参与编译，未指定的所有@types下声明文件都将不参与编译
+    "types": [], // 类似typeRoots，前者指定目录，后者指定node_modules中@types目录下哪些声明文件参与编译，未指定的所有@types下声明文件都将不参与编译
+
+    // * --------------------------------
+    // * Emit 输出相关
+    // * --------------------------------
+    "declaration": true, // 是否为模块生成声明文件(.d.ts)，声明文件可用在非ts项目中用来做智能提示、类型推导；当设置了composite，此值强行为true
+    "declarationDir": "./types", // 声明文件生成目录
+    "declarationMap": true, // 是否为声明文件生成sourceMap，默认为false
+    "downlevelIteration": true, // 是否为es6中的for/of，扩展运算符、剩余参数运算符做降级处理，默认为false
+    "emitBOM": false, // 是否在输出文件的开头加入BOM头（UTF-8 Byte Order Mark），此BOM为Byte Order Mark；默认false， 不建议调整为true
+    "emitDeclarationOnly": true, // 只输出声明文件，不输出js文件；一般用在有其它方式生成js文件的场景
+    "importHelpers": false, // 降级处理时，默认会在每个需要处理的地方，生成降级处理辅助方法，多文件场景会重复生成，启用此选项后，所有辅助方法都将从ts-lib库中导入（必须手动安装ts-lib），可以减少重复代码；
+    "noEmitHelpers": true, // 当用babel处理降级时或者自己提供了辅助函数的实现，可以考虑使用noEmitHelpers:true选项，不打包辅助方法，自行从gloabl上下文中导入，类似webpack中的externals选项
+    "importsNotUsedAsValues": "error", // 针对import语法中未实际使用的类型和变量的，import可同时导入ts的类型(显示导入使用import type)和变量；此选项有remove、preserve、error值；remove时，会删除所有未使用到的类型，变量保留；preserve时，会保留未用到的类型和变量；error时，类似preserve处理，保留未使用到的类型和变量，但会给予错误提示
+    "inlineSourceMap": false, // 是否内联sourceMap到输出的js文件中
+    "inlineSources": false, // 是否需要把ts源码内嵌到输出的js文件中
+    "mapRoot": "https://my-website.com/debug/sourcemaps/", //  为调试器指定sourceMap文件的目录
+    "newLine": "CRLF", // 指定输出文件的换行方式，默认根据平台走
+    "noEmit": false, // 不输出任何文件（包括js、d.ts、map文件），一般用在和babel配合使用的场景，babel负责编译，ts只负责源码的类型检查
+    "noEmitOnError": true, // 在报错时终止输出文件，watch模式建议保持为false
+    "outDir": "dist", // 编译后的js文件目录；正常情况，tsc会按照rootDir中的目录结构在outDir中生成相同目录结构的js文件；
+    // "outFile": "", //如果指定了，会将所有全局变量（非模块）打包到一个输出文件中，只能在module为None, System, AMD时使用
+    "preserveConstEnums": true, // 是否保留const-enum实现；https://www.typescriptlang.org/tsconfig#preserveConstEnums
+    "preserveValueImports": true, // 是否保留未使用到的值导入，默认会报错；在eval场景，ts无法侦测到某个值导入是否真正的用到了，此值为true，将直接保留，否则会删除；https://www.typescriptlang.org/tsconfig#preserveValueImports
+    "removeComments": true, // 输出js文件时是否需要移除注释
+    "sourceMap": true, // 是否生成sourceMap文件
+    "sourceRoot": "https://my-website.com/debug/source", // 为调试器指定ts源码文件目录
+    "stripInternal": true, // 为true时，不对具有/** @internal */ JSDoc注解的代码生成声明文件代码
+
+    // * --------------------------------
+    // * JavaScript Support js支持相关
+    // * --------------------------------
+    "allowJs": true, // 是否允许在项目中导入js文件，默认false；渐进式接入ts时，可开启
+    "checkJs": true, // 是否对js文件进行类型检查，默认false；
+    "maxNodeModuleJsDepth": 0, // 在node_modules中搜索依赖的最大深度，默认0；这选项只能在allowJs开启，并且你需要推断node_modules中js文件的类型时使用；理想状态应该是保持为0，然后通过.d.ts声明文件去准确定义node_modules中依赖的形状
+
+    // * --------------------------------
+    // * Editor Support 编辑器支持相关
+    // * --------------------------------
+    "disableSizeLimit": false, // 是否禁用ts最大内存占用限制，开启后，ts将不受内存限制
+    "plugins": [], // 在编辑中运行的语言服务插件，vscode会自动导入部分插件https://www.typescriptlang.org/tsconfig#plugins，自动导入的插件不需要在tsconfig.json中重复配置
+
+    // * --------------------------------
+    // * Interop Constraints 交互约束相关
+    // * --------------------------------
+    "allowSyntheticDefaultImports": false, // 是否允许在模块没有default导出时，使用import React from "react"代替import * as React from "react"；当(module === system) || (esModuleInterop && (module !== es6 || module !==es2015))时，默认为true，否则为false；
+    "esModuleInterop": false, // 当此选项为false时，ts对待CommonJs/AMD/UMD模块会向对待esm一样；import * as moment from "moment" 等价于 const moment = require("moment")；import moment from "moment" 等价于 const moment = require("moment").default；这会导致两个问题https://www.typescriptlang.org/tsconfig#esModuleInterop，启用此选项后，会生成辅助函数规避这两个问题，配合importHelpers可以避免辅助函数重复
+    "forceConsistentCasingInFileNames": true, // 是否强制所有文件名保持统一的大小写，有些系统会大小写不敏感，import test from './Test.js'，也会读取到./test.js，开启后此场景会报错
+    "isolatedModules": true, // tsc编译时可以理解全局的类型再编译，但像babel这样的单文件编译器，只能理解当前文件，所以会出现一些运行问题；开启后，TypeScript 将会在当你写的某些代码不能被单文件转译的过程正确处理时警告你。https://www.typescriptlang.org/tsconfig#isolatedModules
+    "preserveSymlinks": false, // 是否保留符号链接，https://www.typescriptlang.org/zh/tsconfig#preserveSymlinks
+
+    // * --------------------------------
+    // * Backwards Compatibility 向后兼容相关
+    // * --------------------------------
+    "charset": "utf-8", // 文件的字符编码，默认utf-8；
+    "keyofStringsOnly": false, // 启用后keyof关键字只返回string，而不是string | number；
+    "noImplicitUseStrict": false, // 是否禁止隐式的use strict，默认false；默认情况下，当输出到非es6模块时，会自动加上use strict；启动后，不会添加use strict
+    "noStrictGenericChecks": false, // 是否禁止严格的泛型检查，默认false；默认情况下，比较两个泛型方法时，ts会统一类型，开启后，将不会统一类型
+    "out": "", // 废弃，使用outFile代替
+    "suppressExcessPropertyErrors": false, // 当赋值了多余属性时，ts会报错余，设为true将不报错（建议使用@ts-ignore替代此选项）
+    "suppressImplicitAnyIndexErrors": false, // 当为true时，隐形any将不报错，建议使用@ts-ignore替代
+
+    // * --------------------------------
+    // * Language and Environment 语言和环境相关
+    // * --------------------------------
+    "emitDecoratorMetadata": false, // 使用装饰器时，是否输出装饰器的元数据，默认false；
+    "experimentalDecorators": false, // 是否启用装饰器，默认false；
+    "jsx": "react", // jsx在编译后js文件中的形式，可接受值preserve,react,react-native,react-jsx,react-jsxdev，默认react(jsx转换为React.createElement);https://www.typescriptlang.org/tsconfig#jsx
+    "jsxFactory": "React.createElement", // 当jsx选项为react时，使用的jsx工厂函数，默认React.createElement，可以调整为h或者preact.h
+    "jsxFragmentFactory": "Fragment", // 类似jsxFactory，Fragment的工厂函数
+    // "jsxImportSource": "react-jsx", // 当jsx选项为"react-jsx" or "react-jsxdev"时，jsxImportSource可用来指定jsx、jsxs的工厂函数来源
+    "lib": ["dom"], // 手动指定ts需要的声明文件包；默认ts会根据target引入内置的对应声明文件；全量声明文件可检查https://github.com/microsoft/TypeScript/tree/main/lib
+    // "nolLib": false, // 为true，将关闭所有内置声明文件，lib选项将被忽略
+    "reactNamespace": "", // 废弃，使用jsxFactory代替
+    "target": "es5", // 指定输出js文件ecmascript版本;接受es3，es5，es6/es2015，es2016，es2017，es2018，es2019，es2020，es2021，esnext，默认es3；target会影响到lib
+    "useDefineForClassFields": false, // class的属性字段是否使用object.defineProperty定义；当target为es2022或更新（包括esnext)，则会默认为true，否则为false
+
+    // * --------------------------------
+    // *  Compiler Diagnostics 编译器诊断相关
+    // * --------------------------------
+    "diagnostics": true, // 为true时会输出用于调试的诊断信息
+    "explainFiles": true, // 打印每个文件被编译的原因和信息
+    "extendedDiagnostics": true, //  打印ts编译用时
+    "generateCpuProfile": "profile.cpuprofile", // 打印cpu信息，可排查编译缓慢的原因
+    "listEmittedFiles": false, // 在终端列出所有输出文件
+    "listFiles": false, // 列出所有文件，包含声明文件
+    "traceResolution": false, // 是否跟踪解析过程，当排查某文件为何被include时，可以设置为true
+
+    // * --------------------------------
+    // *  Projects 项目相关
+    // * --------------------------------
+    "composite": false, // 用于工程引用场景https://www.typescriptlang.org/docs/handbook/project-references.html，引用的子工程必须开启此选项，此选项用于帮助TypeScript快速确定引用工程的输出文件位置；具体见https://www.typescriptlang.org/tsconfig#composite
+    "disableReferencedProjectLoad": true, // 是否禁用在项目加载时自动load全量引用项目，禁用后可改善性能；禁用后，引用项目会在打开时自动加载
+    "disableSolutionSearching": true, // 是否不希望项目出现在find all references或jump to definition 名单中，禁用后可提升大型项目响应速度
+    "disableSourceOfProjectReferenceRedirect": true, // 是否禁用源项目引用重定向；https://www.typescriptlang.org/tsconfig#disableSourceOfProjectReferenceRedirect
+    "incremental": true, // 是否启用增量编译，会保存tsbuildinfo，当composite启用时此选项自动为true，否则为false
+    "tsBuildInfoFile": ".tsbuildinfo", // 指定构建信息文件名，默认为.tsbuildinfo
+
+    // * --------------------------------
+    // * Output Formatting 输出格式相关
+    // * --------------------------------
+    "noErrorTruncation": false, // 是否不截断错误消息
+    "preserveWatchOutput": false, // watch模式下是否保留上次终端输出
+    "pretty": true, // 是否对终端输出信息做美化
+
+    // * --------------------------------
+    // * Completeness 完整性相关
+    // * --------------------------------
+    "skipDefaultLibCheck": false, // 废弃，使用 skipLibCheck 替代
+    "skipLibCheck": false, // 是否跳过默认lib的类型检查，可节省部分编译时间
+
+    // * --------------------------------
+    // * Command Line 命令行相关
+    // * --------------------------------
+    "assumeChangesOnlyAffectDirectDependencies": true // 是否假设文件变化只影响直接依赖文件，开启后，文件变化后，只重新检查/编译直接使用到它的文件
   },
-
-  // * --------------------------------
-  // * Emit 输出相关
-  // * --------------------------------
-  "declaration": true, // 是否为模块生成声明文件(.d.ts)，声明文件可用在非ts项目中用来做智能提示、类型推导；当设置了composite，此值强行为true
-  "declarationDir": "./types", // 声明文件生成目录
-  "declarationMap": true, // 是否为声明文件生成sourceMap，默认为false
-  "downlevelIteration": true, // 是否为es6中的for/of，扩展运算符、剩余参数运算符做降级处理，默认为false
-  "emitBOM": false, // 是否在输出文件的开头加入BOM头（UTF-8 Byte Order Mark），此BOM为Byte Order Mark；默认false， 不建议调整为true
-  "emitDeclarationOnly": true, // 只输出声明文件，不输出js文件；一般用在有其它方式生成js文件的场景
-  "importHelpers": false, // 降级处理时，默认会在每个需要处理的地方，生成降级处理辅助方法，多文件场景会重复生成，启用此选项后，所有辅助方法都将从ts-lib库中导入（必须手动安装ts-lib），可以减少重复代码；
-  "noEmitHelpers": true, // 当用babel处理降级时或者自己提供了辅助函数的实现，可以考虑使用noEmitHelpers:true选项，不打包辅助方法，自行从gloabl上下文中导入，类似webpack中的externals选项
-  "importsNotUsedAsValues": "error", // 针对import语法中未实际使用的类型和变量的，import可同时导入ts的类型(显示导入使用import type)和变量；此选项有remove、preserve、error值；remove时，会删除所有未使用到的类型，变量保留；preserve时，会保留未用到的类型和变量；error时，类似preserve处理，保留未使用到的类型和变量，但会给予错误提示
-  "inlineSourceMap": false, // 是否内联sourceMap到输出的js文件中
-  "inlineSources": false, // 是否需要把ts源码内嵌到输出的js文件中
-  "mapRoot": "https://my-website.com/debug/sourcemaps/", //  为调试器指定sourceMap文件的目录
-  "newLine": "CRLF", // 指定输出文件的换行方式，默认根据平台走
-  "noEmit": true, // 不输出任何文件（包括js、d.ts、map文件），一般用在和babel配合使用的场景，babel负责编译，ts只负责源码的类型检查
-  "noEmitOnError": true, // 在报错时终止输出文件，watch模式建议保持为false
-  "outDir": "dist", // 编译后的js文件目录；正常情况，tsc会按照rootDir中的目录结构在outDir中生成相同目录结构的js文件；
-  "outFile": "", //如果指定了，会将所有全局变量（非模块）打包到一个输出文件中，只能在module为None, System, AMD时使用
-  "preserveConstEnums": false, // 是否保留const-enum实现；https://www.typescriptlang.org/tsconfig#preserveConstEnums
-  "preserveValueImports": true, // 是否保留未使用到的值导入，默认会报错；在eval场景，ts无法侦测到某个值导入是否真正的用到了，此值为true，将直接保留，否则会删除；https://www.typescriptlang.org/tsconfig#preserveValueImports
-  "removeComments": true, // 输出js文件时是否需要移除注释
-  "sourceMap": true, // 是否生成sourceMap文件
-  "sourceRoot": "https://my-website.com/debug/source", // 为调试器指定ts源码文件目录
-  "stripInternal": true, // 为true时，不对具有/** @internal */ JSDoc注解的代码生成声明文件代码
-
-  // * --------------------------------
-  // * JavaScript Support js支持相关
-  // * --------------------------------
-  "allowJs": true, // 是否允许在项目中导入js文件，默认false；渐进式接入ts时，可开启
-  "checkJs": true, // 是否对js文件进行类型检查，默认false；
-  "maxNodeModuleJsDepth": 0, // 在node_modules中搜索依赖的最大深度，默认0；这选项只能在allowJs开启，并且你需要推断node_modules中js文件的类型时使用；理想状态应该是保持为0，然后通过.d.ts声明文件去准确定义node_modules中依赖的形状
-
-  // * --------------------------------
-  // * Editor Support 编辑器支持相关
-  // * --------------------------------
-  "disableSizeLimit": false, // 是否禁用ts最大内存占用限制，开启后，ts将不受内存限制
-  "plugins": [], // 在编辑中运行的语言服务插件，vscode会自动导入部分插件https://www.typescriptlang.org/tsconfig#plugins，自动导入的插件不需要在tsconfig.json中重复配置
-
-  // * --------------------------------
-  // * Interop Constraints 交互约束相关
-  // * --------------------------------
-  "allowSyntheticDefaultImports": false, // 是否允许在模块没有default导出时，使用import React from "react"代替import * as React from "react"；当(module === system) || (esModuleInterop && (module !== es6 || module !==es2015))时，默认为true，否则为false；
-  "esModuleInterop": false, // 当此选项为false时，ts对待CommonJs/AMD/UMD模块会向对待esm一样；import * as moment from "moment" 等价于 const moment = require("moment")；import moment from "moment" 等价于 const moment = require("moment").default；这会导致两个问题https://www.typescriptlang.org/tsconfig#esModuleInterop，启用此选项后，会生成辅助函数规避这两个问题，配合importHelpers可以避免辅助函数重复
-  "forceConsistentCasingInFileNames": true, // 是否强制所有文件名保持统一的大小写，有些系统会大小写不敏感，import test from './Test.js'，也会读取到./test.js，开启后此场景会报错
-  "isolatedModules": true, // tsc编译时可以理解全局的类型再编译，但像babel这样的单文件编译器，只能理解当前文件，所以会出现一些运行问题；开启后，TypeScript 将会在当你写的某些代码不能被单文件转译的过程正确处理时警告你。https://www.typescriptlang.org/tsconfig#isolatedModules
-  "preserveSymlinks": false, // 是否保留符号链接，https://www.typescriptlang.org/zh/tsconfig#preserveSymlinks
-
-  // * --------------------------------
-  // * Backwards Compatibility 向后兼容相关
-  // * --------------------------------
-  "charset": "utf-8", // 文件的字符编码，默认utf-8；
-  "keyofStringsOnly": false, // 启用后keyof关键字只返回string，而不是string | number；
-  "noImplicitUseStrict": false, // 是否禁止隐式的use strict，默认false；默认情况下，当输出到非es6模块时，会自动加上use strict；启动后，不会添加use strict
-  "noStrictGenericChecks": false, // 是否禁止严格的泛型检查，默认false；默认情况下，比较两个泛型方法时，ts会统一类型，开启后，将不会统一类型
-  "out": "", // 废弃，使用outFile代替
-  "suppressExcessPropertyErrors": false, // 当赋值了多余属性时，ts会报错余，设为true将不报错（建议使用@ts-ignore替代此选项）
-  "suppressImplicitAnyIndexErrors": false, // 当为true时，隐形any将不报错，建议使用@ts-ignore替代
-
-  // * --------------------------------
-  // * Language and Environment 语言和环境相关
-  // * --------------------------------
-  "emitDecoratorMetadata": false, // 使用装饰器时，是否输出装饰器的元数据，默认false；
-  "experimentalDecorators": false, // 是否启用装饰器，默认false；
-  "jsx": "react", // jsx在编译后js文件中的形式，可接受值preserve,react,react-native,react-jsx,react-jsxdev，默认react(jsx转换为React.createElement);https://www.typescriptlang.org/tsconfig#jsx
-  "jsxFactory": "React.createElement", // 当jsx选项为react时，使用的jsx工厂函数，默认React.createElement，可以调整为h或者preact.h
-  "jsxFragmentFactory": "Fragment", // 类似jsxFactory，Fragment的工厂函数
-  "jsxImportSource": "react", // 当jsx选项为"react-jsx" or "react-jsxdev"时，jsxImportSource可用来指定jsx、jsxs的工厂函数来源
-  "lib": [], // 手动指定ts需要的声明文件包；默认ts会根据target引入内置的对应声明文件；全量声明文件可检查https://github.com/microsoft/TypeScript/tree/main/lib
-  "nolLib": true, // 为true，将关闭所有内置声明文件，lib选项将被忽略
-  "reactNamespace": "", // 废弃，使用jsxFactory代替
-  "target": "es5", // 指定输出js文件ecmascript版本;接受es3，es5，es6/es2015，es2016，es2017，es2018，es2019，es2020，es2021，esnext，默认es3；target会影响到lib
-  "useDefineForClassFields": false, // class的属性字段是否使用object.defineProperty定义；当target为es2022或更新（包括esnext)，则会默认为true，否则为false
-
-  // * --------------------------------
-  // *  Compiler Diagnostics 编译器诊断相关
-  // * --------------------------------
-  "diagnostics": true, // 为true时会输出用于调试的诊断信息
-  "explainFiles": true, // 打印每个文件被编译的原因和信息
-  "extendedDiagnostics": true, //  打印ts编译用时
-  "generateCpuProfile": "profile.cpuprofile", // 打印cpu信息，可排查编译缓慢的原因
-  "listEmittedFiles": false, // 在终端列出所有输出文件
-  "listFiles": false, // 列出所有文件，包含声明文件
-  "traceResolution": false, // 是否跟踪解析过程，当排查某文件为何被include时，可以设置为true
-
-  // * --------------------------------
-  // *  Projects 项目相关
-  // * --------------------------------
-  "composite": false, // 用于工程引用场景https://www.typescriptlang.org/docs/handbook/project-references.html，引用的子工程必须开启此选项，此选项用于帮助TypeScript快速确定引用工程的输出文件位置；具体见https://www.typescriptlang.org/tsconfig#composite
-  "disableReferencedProjectLoad": true, // 是否禁用在项目加载时自动load全量引用项目，禁用后可改善性能；禁用后，引用项目会在打开时自动加载
-  "disableSolutionSearching": true, // 是否不希望项目出现在find all references或jump to definition 名单中，禁用后可提升大型项目响应速度
-  "disableSourceOfProjectReferenceRedirect": true, // 是否禁用源项目引用重定向；https://www.typescriptlang.org/tsconfig#disableSourceOfProjectReferenceRedirect
-  "incremental": true, // 是否启用增量编译，会保存tsbuildinfo，当composite启用时此选项自动为true，否则为false
-  "tsBuildInfoFile": ".tsbuildinfo", // 指定构建信息文件名，默认为.tsbuildinfo
-
-  // * --------------------------------
-  // * Output Formatting 输出格式相关
-  // * --------------------------------
-  "noErrorTruncation": false, // 是否不截断错误消息
-  "preserveWatchOutput": false, // watch模式下是否保留上次终端输出
-  "pretty": true, // 是否对终端输出信息做美化
-
-  // * --------------------------------
-  // * Completeness 完整性相关
-  // * --------------------------------
-  "skipDefaultLibCheck": false, // 废弃，使用 skipLibCheck 替代
-  "skipLibCheck": false, // 是否跳过默认lib的类型检查，可节省部分编译时间
-
-  // * --------------------------------
-  // * Command Line 命令行相关
-  // * --------------------------------
-  "assumeChangesOnlyAffectDirectDependencies": true, // 是否假设文件变化只影响直接依赖文件，开启后，文件变化后，只重新检查/编译直接使用到它的文件
 
   // * --------------------------------
   // * Watch watch相关
