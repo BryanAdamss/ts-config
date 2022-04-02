@@ -36,7 +36,7 @@
     "strict": true, // 严格模式总开关，为true后会开启所有严格模式家族选项；可以通过单独设置某家族选项为false来按需配置
     "strictBindCallApply": true, // 是否严格要求调用call、bind、apply时入参必须符合借用函数的入参声明
     "strictFunctionTypes": true, // 是否禁止不安全的父子函数类型声明嵌套使用 https://www.typescriptlang.org/tsconfig#strictFunctionTypes
-    "strictNullChecks": true, // 是否开启严格的null检查，开启后，任何未确保为非null或非undefined的变量在使用时都会报错；
+    "strictNullChecks": true, // 是否开启严格的null检查，开启后，任何无法保证为为非null或非undefined的变量在直接使用时都会报错；
     "strictPropertyInitialization": true, // 是否开启严格的属性初始化，开启后，任何类的属性必须有初始值，要不在声明时顺带赋值，要不先声明后再构造函数中赋值
     "useUnknownInCatchVariables": true, // 在catch语句中使用unknown类型，这样必须在处理catch时，先判断抛出的是一个Error子类；https://www.typescriptlang.org/tsconfig#useUnknownInCatchVariables
 
